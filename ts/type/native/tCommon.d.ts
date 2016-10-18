@@ -1,0 +1,1 @@
+declare const fetch: React.fetch;

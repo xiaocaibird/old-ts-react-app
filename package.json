@@ -1,0 +1,32 @@
+{
+  "name": "react_native_ts",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
+  },
+  "author": "zcm",
+  "description": "",
+  "dependencies": {
+    "lodash": "",
+    "react": "",
+    "react-native": "",
+    "react-native-communications": "",
+    "react-native-device-info": "",
+    "react-native-root-toast": "",
+    "react-native-splash-screen": "",
+    "react-redux": "",
+    "redux": ""
+  },
+  "jest": {
+    "preset": "jest-react-native"
+  },
+  "devDependencies": {
+    "babel-jest": "",
+    "babel-preset-react-native": "",
+    "jest": "",
+    "jest-react-native": "",
+    "react-test-renderer": ""
+  }
+}

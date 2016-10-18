@@ -9,6 +9,17 @@ import { AAsyncOperation } from './infrastructure/AsyncOperation';
 import { ADevice } from './infrastructure/Device';
 import { AUser } from './infrastructure/User';
 
+import { ANativeApp } from './native/App';
+import { ANativeStorage } from './native/Storage';
+import { ANativeRedux } from './native/Redux';
+import { ANativeRequest } from './native/Request';
+import { ANativePrompt } from './native/Prompt';
+import { ANativeNavigation } from './native/Navigation';
+import { ANativeErrorHandler } from './native/Error';
+import { ANativeAsyncOperation } from './native/AsyncOperation';
+import { ANativeDevice } from './native/Device';
+import { ANativeUser } from './native/User';
+
 class _InfrastructureFactory {
     readonly App: AApp<any, any>;
 
@@ -31,4 +42,27 @@ class _InfrastructureFactory {
     readonly User: AUser<any>;
 }
 
+class _NativeFactory extends _InfrastructureFactory {
+    readonly App: ANativeApp<any, any>;
+
+    readonly Storage: ANativeStorage;
+
+    readonly Redux: ANativeRedux<any, any>;
+
+    readonly Request: ANativeRequest;
+
+    readonly Prompt: ANativePrompt;
+
+    readonly Navigation: ANativeNavigation;
+
+    readonly ErrorHandler: ANativeErrorHandler;
+
+    readonly AsyncOperation: ANativeAsyncOperation;
+
+    readonly Device: ANativeDevice;
+
+    readonly User: ANativeUser<any>;
+}
+
 export const InfrastructureFactory = new _InfrastructureFactory();
+export const NativeFactory = new _NativeFactory();
