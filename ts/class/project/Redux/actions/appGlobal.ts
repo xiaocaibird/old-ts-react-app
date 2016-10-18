@@ -51,11 +51,29 @@ export function appClearLargePictureShow(newValue: app_clearLargePicture_show) {
     }
 }
 
+export type app_location_change = { locationInfo: tAppInfo.locationInfo };
+export const app_location_change = 'app_location_change';
+export function appLocationChange(newValue: app_location_change) {
+    return {
+        type: app_location_change,
+        newValue
+    }
+}
+
 export type app_navBar_selectChange = { index: number };
 export const app_navBar_selectChange = "app_navBar_selectChange";
 export function appNavBarSelectChange(newValue: app_navBar_selectChange) {
     return {
         type: app_navBar_selectChange,
+        newValue
+    }
+}
+
+export type goods_showInfo = tAppInfo.addGoodsInfo
+export const goods_showInfo = "goods_showInfo";
+export function goodsShowInfo(newValue: goods_showInfo) {
+    return {
+        type: goods_showInfo,
         newValue
     }
 }
