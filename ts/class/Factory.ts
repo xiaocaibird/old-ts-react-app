@@ -20,26 +20,37 @@ import { AWebAsyncOperation } from './web/AsyncOperation';
 import { AWebDevice } from './web/Device';
 import { AWebUser } from './web/User';
 
+import { App } from './project/App';
+import { Storage } from './project/Storage';
+import { Redux } from './project/Redux';
+import { Request } from './project/Request';
+import { Prompt } from './project/Prompt';
+import { Navigation } from './project/Navigation';
+import { ErrorHandler } from './project/Error';
+import { AsyncOperation } from './project/AsyncOperation';
+import { Device } from './project/Device';
+import { User } from './project/User';
+
 class _InfrastructureFactory {
-    readonly App: AApp<any, any>;
+    readonly App: AApp<any, any> = App.instance;
 
-    readonly Storage: AStorage;
+    readonly Storage: AStorage = Storage.instance;
 
-    readonly Redux: ARedux<any, any>;
+    readonly Redux: ARedux<any, any> = Redux.instance;
 
-    readonly Request: ARequest;
+    readonly Request: ARequest = Request.instance;
 
-    readonly Prompt: APrompt;
+    readonly Prompt: APrompt = Prompt.instance;
 
-    readonly Navigation: ANavigation<any, any>;
+    readonly Navigation: ANavigation<any, any> = Navigation.instance;
 
-    readonly ErrorHandler: AErrorHandler;
+    readonly ErrorHandler: AErrorHandler = ErrorHandler.instance;
 
-    readonly AsyncOperation: AAsyncOperation;
+    readonly AsyncOperation: AAsyncOperation = AsyncOperation.instance;
 
-    readonly Device: ADevice;
+    readonly Device: ADevice = Device.instance;
 
-    readonly User: AUser<any>;
+    readonly User: AUser<any> = User.instance;
 }
 
 class _WebFactory extends _InfrastructureFactory {
@@ -64,6 +75,28 @@ class _WebFactory extends _InfrastructureFactory {
     readonly User: AWebUser<any>;
 }
 
+class _Factory extends _WebFactory {
+    readonly App: App;
+
+    readonly Storage: Storage;
+
+    readonly Redux: Redux;
+
+    readonly Request: Request;
+
+    readonly Prompt: Prompt;
+
+    readonly Navigation: Navigation;
+
+    readonly ErrorHandler: ErrorHandler;
+
+    readonly AsyncOperation: AsyncOperation;
+
+    readonly Device: Device;
+
+    readonly User: User;
+}
 
 export const InfrastructureFactory = new _InfrastructureFactory();
 export const WebFactory = new _WebFactory();
+export const Factory = new _Factory();
