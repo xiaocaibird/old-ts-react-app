@@ -9,6 +9,17 @@ import { AAsyncOperation } from './infrastructure/AsyncOperation';
 import { ADevice } from './infrastructure/Device';
 import { AUser } from './infrastructure/User';
 
+import { AWebApp } from './web/App';
+import { AWebStorage } from './web/Storage';
+import { AWebRedux } from './web/Redux';
+import { AWebRequest } from './web/Request';
+import { AWebPrompt } from './web/Prompt';
+import { AWebNavigation } from './web/Navigation';
+import { AWebErrorHandler } from './web/Error';
+import { AWebAsyncOperation } from './web/AsyncOperation';
+import { AWebDevice } from './web/Device';
+import { AWebUser } from './web/User';
+
 class _InfrastructureFactory {
     readonly App: AApp<any, any>;
 
@@ -31,4 +42,28 @@ class _InfrastructureFactory {
     readonly User: AUser<any>;
 }
 
+class _WebFactory extends _InfrastructureFactory {
+    readonly App: AWebApp<any, any>;
+
+    readonly Storage: AWebStorage;
+
+    readonly Redux: AWebRedux<any, any>;
+
+    readonly Request: AWebRequest;
+
+    readonly Prompt: AWebPrompt;
+
+    readonly Navigation: AWebNavigation;
+
+    readonly ErrorHandler: AWebErrorHandler;
+
+    readonly AsyncOperation: AWebAsyncOperation;
+
+    readonly Device: AWebDevice;
+
+    readonly User: AWebUser<any>;
+}
+
+
 export const InfrastructureFactory = new _InfrastructureFactory();
+export const WebFactory = new _WebFactory();
