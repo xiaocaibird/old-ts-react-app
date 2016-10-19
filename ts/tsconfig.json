@@ -27,7 +27,7 @@
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         /*"preserveConstEnums":true,*/
-        //debug
+        //tsc
         "outDir": "./__out",
         "removeComments": true,
         "sourceMap": false

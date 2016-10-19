@@ -25,6 +25,20 @@ export default class MainNavigator extends baseNativeComponent<props, state> {
     componentDidMount() {
         f.Navigation.setNavigator((this.refs["Navigator"] as any));
 
+        if (f.Device.IsIOS) {
+            setTimeout(
+                () => {
+                    try {
+                        SplashScreen.hide();
+                    }
+                    catch (e) {
+
+                    }
+                },
+                5000
+            )
+        }
+
         f.AsyncOperation.run(
             () => {
                 return f.App.init().then(
@@ -47,7 +61,12 @@ export default class MainNavigator extends baseNativeComponent<props, state> {
             funHp.noop,
             funHp.noop,
             () => {
-                SplashScreen.hide();
+                try {
+                    SplashScreen.hide();
+                }
+                catch (e) {
+
+                }
             }
         );
     }

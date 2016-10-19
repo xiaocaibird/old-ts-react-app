@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import {
-    View
+    View, Image
 } from '../common/native';
 import { baseNativeSceneComponent } from '../base';
 
@@ -12,6 +12,7 @@ export default class AppLoading extends baseNativeSceneComponent<props, state> {
     render() {
         return (
             <View style={styles.container}>
+                <Image source={require('./img/cy.png')} style={styles.Image} />
             </View>
         );
     }
@@ -19,9 +20,14 @@ export default class AppLoading extends baseNativeSceneComponent<props, state> {
 
 
 const styles = StyleSheet.create<{
-    container: React.ViewStyle
+    container: React.ViewStyle,
+    Image: React.ImageStyle
 }>({
     container: {
-        flex: 1
+        flex: 1,
+        justifyContent: 'center',
+    },
+    Image: {
+        alignSelf: 'center'
     }
 });
