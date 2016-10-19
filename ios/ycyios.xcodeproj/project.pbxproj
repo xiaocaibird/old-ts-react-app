@@ -666,6 +666,7 @@
 					"$(SRCROOT)/../react-native/React/**",
 				);
 				INFOPLIST_FILE = ycyios/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -695,6 +696,7 @@
 					"$(SRCROOT)/../react-native/React/**",
 				);
 				INFOPLIST_FILE = ycyios/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -749,7 +751,7 @@
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios/**",
 					"$(SRCROOT)/../node_modules/react-native/React/**",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "0c1ab773-4844-46fe-aed3-e65bfcb6108a";
@@ -792,7 +794,7 @@
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios/**",
 					"$(SRCROOT)/../node_modules/react-native/React/**",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PROVISIONING_PROFILE = "0c1ab773-4844-46fe-aed3-e65bfcb6108a";
 				SDKROOT = iphoneos;
