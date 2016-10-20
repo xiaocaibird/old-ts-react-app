@@ -59,6 +59,9 @@ export abstract class ADevice {
     protected _isAndroid: boolean;
     abstract get IsAndroid(): boolean;
 
+    protected _isPC: boolean;
+    abstract get IsPC(): boolean;
+
     abstract getWindowWidth(...p: any[]): number;
     abstract getWindowHeight(...p: any[]): number;
 

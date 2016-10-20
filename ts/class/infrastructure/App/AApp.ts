@@ -14,7 +14,7 @@ export abstract class AApp<TInitData, TAppConfig> {
 
     protected initData: TInitData;
 
-    protected abstract _appConfig: TAppConfig;
+    protected _appConfig: TAppConfig;
     abstract get AppConfig(): TAppConfig;
 
 

@@ -1,27 +1,26 @@
 import { AWebApp } from '../../web/App';
 import { Factory as f } from '../../Factory';
-import { strHp, objHp } from '../../../helper';
+import { strHp, objHp, cookieHp } from '../../../helper';
 
-export class App extends AWebApp<tAppInfo.initData, tAppInfo.appConfig> {
+export class App extends AWebApp<tProject.initData, tProject.appConfig> {
     static readonly instance: App = new App();
     private constructor() {
         super();
         this.setRefreshStateInStorageHourSpan(0);
     }
 
-    protected _appConfig: tAppInfo.appConfig;
     get AppConfig() {
         if (!this._appConfig) {
             this._appConfig =
                 {
                     lastVersion: {
-                        code: f.Device.AppVersion,
+                        code: wechat_initData.version,
                         upgradeUrl: '',
                         needUpgrade: false
                     },
                     locatoinVersion: {
-                        code: f.Device.AppVersion,
-                        readableCode: f.Device.ReadableVersion
+                        code: cookieHp.getValue(this.versionInfoCookieKey) || '',
+                        readableCode: cookieHp.getValue(this.versionInfoCookieKey) || ''
                     },
                     token: '',
                     listViewPageSize: 20
@@ -31,13 +30,11 @@ export class App extends AWebApp<tAppInfo.initData, tAppInfo.appConfig> {
     }
 
     protected checkUpgrade() {
-        if (!this.AppConfig.lastVersion.code || this.AppConfig.lastVersion.code <= this.AppConfig.locatoinVersion.code) {
-            return eCommon.checkUpgrade.noNew
-        }
-        else if (this.AppConfig.lastVersion.needUpgrade) {
+        if (!this.AppConfig.locatoinVersion.code || this.AppConfig.lastVersion.code > this.AppConfig.locatoinVersion.code) {
             return eCommon.checkUpgrade.necessary
         }
-        return eCommon.checkUpgrade.haveNew;
+
+        return eCommon.checkUpgrade.noNew;
     }
 
     protected clearState() {
@@ -46,30 +43,42 @@ export class App extends AWebApp<tAppInfo.initData, tAppInfo.appConfig> {
     }
 
     protected setInitData() {
-        return f.Request.getAppInitData().then(
-            (data: any) => {
-                this.initData = data;
-            }
-        )
+        this.initData = wechat_initData;
+        return f.AsyncOperation.getResolve();
     }
 
     upgrade() {
-        f.Storage.remove(this.lastUnLoadInfoInStorageKey);
-        try {
-            if (f.Device.IsIOS) {
-                return f.Navigation.openUrl(this.AppConfig.lastVersion.upgradeUrl);
-            }
-            else if (f.Device.IsAndroid) {
-                return f.Navigation.openUrl(this.AppConfig.lastVersion.upgradeUrl);
-            }
-        }
-        catch (e) {
-            f.ErrorHandler.log(e);
-        }
-        return f.AsyncOperation.getReject();
+        this.reset('即将进行版本更新！', () => cookieHp.setValue(this.versionInfoCookieKey, this.AppConfig.lastVersion.code, undefined, true));
     }
 
     init() {
+        window.onerror = (msg, url, num) => {
+            f.ErrorHandler.isHasAppGlobalError = true;
+            f.ErrorHandler.log({ msg: msg, url: url, lineNum: num });
+            this.reset();
+        }
+
+        let isRefresh = false;
+        window.onbeforeunload = () => {
+            /*isRefresh = true;*/
+        }
+
+        window.onunload = () => {
+            if (f.ErrorHandler.isHasAppGlobalError || isRefresh) {
+                f.Storage.remove(this.lastUnLoadInfoInStorageKey);
+                return
+            }
+
+            f.Storage.setValue(this.lastUnLoadInfoInStorageKey,
+                JSON.stringify(
+                    {
+                        lastUnloadTime: new Date().getTime(),
+                        state: f.Redux.getState()
+                    }
+                )
+            );
+        }
+
         const setInitState = () => {
             return this.setInitData().then(
                 () => {
@@ -77,19 +86,9 @@ export class App extends AWebApp<tAppInfo.initData, tAppInfo.appConfig> {
                         if (!this.initData) {
                             return f.AsyncOperation.getReject();
                         }
-                        const v = this.initData.version;
+                        document.title = this.initData.app_title;
 
                         this._appConfig = objHp.assign({}, this.AppConfig, {
-                            lastVersion: v ? {
-                                code: v.version_no ? v.version_no : f.Device.AppVersion,
-                                upgradeUrl: v.down_url ? v.down_url : '',
-                                needUpgrade: v.must_update == '1' || v.must_update == 1 ? true : false
-                            } : {
-                                    code: f.Device.AppVersion,
-                                    upgradeUrl: '',
-                                    needUpgrade: false
-                                },
-                            locatoinVersion: { code: f.Device.AppVersion },
                             token: this.initData.token
                         });
                         const check = this.checkUpgrade();
@@ -97,18 +96,14 @@ export class App extends AWebApp<tAppInfo.initData, tAppInfo.appConfig> {
                         if (check != eCommon.checkUpgrade.necessary) {
                             f.Redux.changeState(f.Redux.action.appInit(this.initData));
 
-                            if (check == eCommon.checkUpgrade.haveNew) {
-                                f.Prompt.confirmPopUp(
-                                    '当前软件版本：' + f.App.AppConfig.locatoinVersion.code + '。最新版本：' + f.App.AppConfig.lastVersion.code + '。是否要更新？',
-                                    '有新的版本',
-                                    f.App.upgrade
-                                );
+                            if (f.Device.IsPC) {
+                                f.Prompt.warningPopUp('在使用过程中如遇到问题，请使用<span style="color:red;">手机</span>登录我们的微信商城。<br />电脑版商城将会在近期推出。敬请期待！');
                             }
 
                             return f.AsyncOperation.getResolve();
                         }
                         else {
-
+                            this.upgrade();
                             return f.AsyncOperation.getReject();
                         }
                     }
@@ -120,32 +115,23 @@ export class App extends AWebApp<tAppInfo.initData, tAppInfo.appConfig> {
             )
         };
 
-        return f.Storage.getValue(this.lastUnLoadInfoInStorageKey).then(
-            (lastUnLoadInfoStr) => {
-                try {
-                    if (lastUnLoadInfoStr) {
-                        const lastUnLoadInfo = strHp.toJson<tAppInfo.lastUnLoadInfo>(lastUnLoadInfoStr);
-                        if (lastUnLoadInfo && lastUnLoadInfo.lastUnloadTime && lastUnLoadInfo.state && !this.isRefreshStateInStroage(lastUnLoadInfo.lastUnloadTime)) {
-                            lastUnLoadInfo.state.appGlobal.spinnerShow = false;
-                            lastUnLoadInfo.state.appGlobal.navBarShow = false;
-                            lastUnLoadInfo.state.appGlobal.navBarSelectIndex = 0;
-                            lastUnLoadInfo.state.appGlobal.addGoodsInfo.show = false;
-                            lastUnLoadInfo.state.appGlobal.clearLargePicture.show = false;
-                            f.Redux.changeState(f.Redux.action.appRecoverByLastUnLoadState(lastUnLoadInfo.state));
-                        }
-                    }
-                }
-                catch (e) {
-                    f.ErrorHandler.log(e);
-                }
+        const lastUnLoadInfoStr = f.Storage.getValue(this.lastUnLoadInfoInStorageKey);
 
-                return setInitState();
-            },
-            () => {
-                return setInitState();
+        try {
+            if (lastUnLoadInfoStr) {
+                const lastUnLoadInfo = strHp.toJson<tProject.lastUnLoadInfo>(lastUnLoadInfoStr);
+                if (lastUnLoadInfo && lastUnLoadInfo.lastUnloadTime && lastUnLoadInfo.state && !this.isRefreshStateInStroage(lastUnLoadInfo.lastUnloadTime)) {
+                    lastUnLoadInfo.state.appGlobal.spinnerShow = false;
+                    lastUnLoadInfo.state.appGlobal.addGoodsInfo.show = false;
+                    lastUnLoadInfo.state.appGlobal.clearLargePicture.show = false;
+                    f.Redux.changeState(f.Redux.action.appRecoverByLastUnLoadState(lastUnLoadInfo.state));
+                }
             }
-        );
-
+        }
+        catch (e) {
+            f.ErrorHandler.log(e);
+        }
+        return setInitState();
     }
 
     spinnerShow(show: boolean) {

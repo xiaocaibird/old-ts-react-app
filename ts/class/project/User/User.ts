@@ -1,6 +1,6 @@
 import { AWebUser } from '../../web/User';
 import { Factory as f } from '../../Factory';
-export class User extends AWebUser<tAppInfo.nowUser> {
+export class User extends AWebUser<tProject.nowUser> {
     static readonly instance: User = new User();
     private constructor() {
         super();

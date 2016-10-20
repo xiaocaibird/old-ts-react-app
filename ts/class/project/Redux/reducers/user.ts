@@ -5,7 +5,7 @@ type art = tRedux.actionReturn;
 type rht = tRedux.reducerHandler;
 
 
-const userInfoDefault: tAppInfo.userInfo = {
+const userInfoDefault: tProject.userInfo = {
     nowUser: undefined
 }
 
@@ -15,27 +15,27 @@ const userInfoHandler: {
         [ac.app_reset]: () => {
             return objHp.cloneDeep(userInfoDefault)
         },
-        [ac.app_recoverByLastUnLoadState]: (_state: tAppInfo.userInfo, newValue: ac.app_recoverByLastUnLoadState) => {
+        [ac.app_recoverByLastUnLoadState]: (_state: tProject.userInfo, newValue: ac.app_recoverByLastUnLoadState) => {
             return newValue.userInfo;
         },
 
-        [ac.app_init]: (state: tAppInfo.userInfo, newValue: ac.app_init) => {
+        [ac.app_init]: (state: tProject.userInfo, newValue: ac.app_init) => {
             const v = {
                 nowUser: newValue.isLogin && newValue.userInfo ? newValue.userInfo : undefined
             }
             return objHp.assign({}, state, v);
         },
 
-        [ac.user_logout]: (state: tAppInfo.userInfo) => {
+        [ac.user_logout]: (state: tProject.userInfo) => {
             return objHp.assign({}, state, { nowUser: undefined });
         },
-        [ac.user_login]: (state: tAppInfo.userInfo, newValue: ac.user_login) => {
+        [ac.user_login]: (state: tProject.userInfo, newValue: ac.user_login) => {
             const v = {
                 nowUser: newValue.nowUser
             }
             return objHp.assign({}, state, v);
         },
-        [ac.user_updateInfo]: (state: tAppInfo.userInfo, newValue: ac.user_updateInfo) => {
+        [ac.user_updateInfo]: (state: tProject.userInfo, newValue: ac.user_updateInfo) => {
             if (!newValue) return state;
             const v = {
                 nowUser: objHp.assign({}, state.nowUser, newValue)

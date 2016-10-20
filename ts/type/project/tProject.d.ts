@@ -1,4 +1,98 @@
-declare namespace tComponent {
+declare namespace tProject {
+    export type lastUnLoadInfo = {
+        state: state,
+        lastUnloadTime: number
+    }
+    export type initData = {
+        "my_order": boolean,
+        "icon_user": string,
+        "service_mobile": string,
+        "token": string,
+        "cartGoodsTotal": number,
+        "isOpen": boolean,
+        "addrInfo": locationInfo,
+        "isLogin": boolean,
+        "version": string,
+        "openId": string,
+        "app_title": string,
+        "is_debug": boolean,
+        "userInfo": nowUser
+    }
+    export type appConfig = {
+        lastVersion: lastVersion,
+        locatoinVersion: locatoinVersion,
+        token: string,
+        listViewPageSize: number
+    }
+
+    export type lastVersion = {
+        code: string,
+        needUpgrade: boolean,
+        upgradeUrl: string
+    }
+
+    export type locatoinVersion = {
+        code: string,
+        readableCode: string
+    }
+
+    export type state = {
+        appGlobal: appGlobal,
+        userInfo: userInfo
+    }
+
+    export type appGlobal = {
+        spinnerShow: boolean,
+        clearLargePicture: clearLargePicture,
+        navBarShow: boolean,
+        navBarSelectIndex: number,
+        locationInfo: locationInfo,
+        cartGoodsTotal: number,
+        addGoodsInfo: addGoodsInfo
+    }
+    export type userInfo = {
+        nowUser: nowUser
+    }
+
+    export type nowUser = {
+        user_id: string,
+        username: string,
+        consignee_mobile: string,
+        consignee_name: string,
+        shop_name: string,
+        invitation_code: string,
+        province_id: string,
+        province_name: string,
+        city_id: string,
+        city_name: string,
+        district_id: string,
+        district_name: string,
+        address: string,
+        status: IsOrNo,
+        refer_id: '1' | string
+    } | undefined
+}
+
+declare namespace tProject {
+    export type clearLargePicture = {
+        show: boolean,
+        path: string
+    }
+    export type locationInfo = {
+        "province_id": string,
+        "province_name": string,  // 省
+        "city_id": string, // 市ID
+        "city_name": string,  // 市
+        "district_id": string, // 区ID
+        "district_name": string,  // 区
+    }
+    export type addGoodsInfo = {
+        show: boolean,
+        data?: goodsInfo
+    }
+}
+
+declare namespace tProject {
     type IsOrNo = '1' | '0' | 1 | 0;
 
     export type activeList = active[];
@@ -341,3 +435,6 @@ declare namespace tComponent {
         }
     }
 }
+
+declare const wechat_initData: tProject.initData;
+

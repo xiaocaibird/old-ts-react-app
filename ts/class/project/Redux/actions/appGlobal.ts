@@ -15,7 +15,7 @@ export function appReset() {
     }
 }
 
-export type app_init = tAppInfo.initData;
+export type app_init = tProject.initData;
 export const app_init = "app_init";
 export function appInit(newValue: app_init) {
     return {
@@ -24,7 +24,7 @@ export function appInit(newValue: app_init) {
     }
 }
 
-export type app_recoverByLastUnLoadState = tAppInfo.state;
+export type app_recoverByLastUnLoadState = tProject.state;
 export const app_recoverByLastUnLoadState = "app_recoverByLastUnLoadState";
 export function appRecoverByLastUnLoadState(newValue: app_recoverByLastUnLoadState) {
     return {
@@ -51,7 +51,7 @@ export function appClearLargePictureShow(newValue: app_clearLargePicture_show) {
     }
 }
 
-export type app_location_change = { locationInfo: tAppInfo.locationInfo };
+export type app_location_change = { locationInfo: tProject.locationInfo };
 export const app_location_change = 'app_location_change';
 export function appLocationChange(newValue: app_location_change) {
     return {
@@ -69,7 +69,7 @@ export function appNavBarSelectChange(newValue: app_navBar_selectChange) {
     }
 }
 
-export type goods_showInfo = tAppInfo.addGoodsInfo
+export type goods_showInfo = tProject.addGoodsInfo
 export const goods_showInfo = "goods_showInfo";
 export function goodsShowInfo(newValue: goods_showInfo) {
     return {

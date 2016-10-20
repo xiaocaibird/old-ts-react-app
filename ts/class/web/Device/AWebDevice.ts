@@ -6,7 +6,16 @@ export abstract class AWebDevice extends ADevice {
         return '';
     }
     get SystemName() {
-        return '';
+        if (!this._systemName) {
+            this._systemName = 'PC';
+            for (let v = 0; v < Agents.length; v++) {
+                if (navigator.userAgent.indexOf(Agents[v]) > 0) { this._systemName = Agents[v]; break; }
+            }
+            if (this._systemName == 'iPhone') {
+                this._systemName = 'iOS';
+            }
+        }
+        return this._systemName;
     }
 
     get AppVersion() {
@@ -84,6 +93,14 @@ export abstract class AWebDevice extends ADevice {
         return this._isAndroid;
     }
 
+    get IsPC() {
+        if (this._isPC == null) {
+            this._isPC = this.SystemName.toLowerCase() == 'pc' ? true : false;
+        }
+
+        return this._isPC;
+    }
+
     getWindowWidth(type: 'client' | 'offset' = 'client') {
         if (type == 'client')
             return document.body.clientWidth;
@@ -116,3 +133,5 @@ export abstract class AWebDevice extends ADevice {
 
     }
 }
+
+const Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone");

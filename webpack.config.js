@@ -44,7 +44,7 @@ module.exports = {
             'react-iscroll'
         ],
         app: [
-            "/ts/Component/WebApp.tsx"
+            "/ts/Component/index.tsx"
         ]
 
     },
@@ -74,10 +74,10 @@ module.exports = {
                 warnings: false
             }
         }),
-        /*new webpack.ProvidePlugin({
+        new webpack.ProvidePlugin({
             $: "jquery",
             jQuery: 'jquery',
             jquery: 'jquery'
-        })*/
+        })
     ]
 };

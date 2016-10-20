@@ -43,7 +43,7 @@ module.exports = {
         app: [
             'webpack-dev-server/client?http://localhost:3000', // WebpackDevServer host and port
             'webpack/hot/dev-server', // "only" prevents reload on syntax errors
-            "/ts/Component/WebApp.tsx"
+            "/ts/Component/index.tsx"
         ]
     },
     output: {
@@ -65,11 +65,11 @@ module.exports = {
             name: "vendor",
             minChunks: Infinity
         }),
-        /*new webpack.ProvidePlugin({
+        new webpack.ProvidePlugin({
             $: "jquery",
             jQuery: 'jquery',
             jquery: 'jquery'
-        })*/
+        })
     ],
     devtool: 'inline-source-map'
 };

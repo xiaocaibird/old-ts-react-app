@@ -5,7 +5,7 @@ type art = tRedux.actionReturn;
 type rht = tRedux.reducerHandler;
 
 
-const appGlobalDefault: tAppInfo.appGlobal = {
+const appGlobalDefault: tProject.appGlobal = {
     locationInfo: {
         province_id: '',
         province_name: '',
@@ -34,45 +34,45 @@ const appGlobalHandler: {
         [ac.app_reset]: () => {
             return objHp.cloneDeep(appGlobalDefault)
         },
-        [ac.app_recoverByLastUnLoadState]: (_state: tAppInfo.appGlobal, newValue: ac.app_recoverByLastUnLoadState) => {
+        [ac.app_recoverByLastUnLoadState]: (_state: tProject.appGlobal, newValue: ac.app_recoverByLastUnLoadState) => {
             return newValue.appGlobal;
         },
 
 
-        [ac.app_exit]: (state: tAppInfo.appGlobal, newValue: ac.app_exit) => {
+        [ac.app_exit]: (state: tProject.appGlobal, newValue: ac.app_exit) => {
             return objHp.assign({}, state, newValue);
         },
-        [ac.app_init]: (state: tAppInfo.appGlobal, newValue: ac.app_init) => {
+        [ac.app_init]: (state: tProject.appGlobal, newValue: ac.app_init) => {
             const v = {
                 navBarShow: true,
-                locationInfo: newValue.info,
+                locationInfo: newValue.addrInfo,
                 cartGoodsTotal: newValue.cartGoodsTotal
             }
             return objHp.assign({}, state, v);
         },
-        [ac.app_location_change]: (state: tAppInfo.appGlobal, newValue: ac.app_location_change) => {
+        [ac.app_location_change]: (state: tProject.appGlobal, newValue: ac.app_location_change) => {
             const v = {
                 locationInfo: newValue.locationInfo
             }
             return objHp.assign({}, state, v);
         },
-        [ac.app_spinner_show]: (state: tAppInfo.appGlobal, newValue: ac.app_spinner_show) => {
+        [ac.app_spinner_show]: (state: tProject.appGlobal, newValue: ac.app_spinner_show) => {
             const v = {
                 spinnerShow: newValue.show
             }
             return objHp.assign({}, state, v);
         },
-        [ac.app_clearLargePicture_show]: (state: tAppInfo.appGlobal, newValue: ac.app_clearLargePicture_show) => {
+        [ac.app_clearLargePicture_show]: (state: tProject.appGlobal, newValue: ac.app_clearLargePicture_show) => {
             const v = objHp.assign({}, state.clearLargePicture, newValue);
             return objHp.assign({}, state, { clearLargePicture: v });
         },
-        [ac.app_navBar_selectChange]: (state: tAppInfo.appGlobal, newValue: ac.app_navBar_selectChange) => {
+        [ac.app_navBar_selectChange]: (state: tProject.appGlobal, newValue: ac.app_navBar_selectChange) => {
             const v = {
                 navBarSelectIndex: newValue.index
             }
             return objHp.assign({}, state, v);
         },
-        [ac.user_login]: (state: tAppInfo.appGlobal, newValue: ac.user_login) => {
+        [ac.user_login]: (state: tProject.appGlobal, newValue: ac.user_login) => {
             let v: any = {
                 cartGoodsTotal: newValue.cartGoodsTotal
             };
@@ -88,10 +88,10 @@ const appGlobalHandler: {
             };
             return objHp.assign({}, state, v);
         },
-        [ac.user_logout]: (state: tAppInfo.appGlobal) => {
+        [ac.user_logout]: (state: tProject.appGlobal) => {
             return objHp.assign({}, state, { cartGoodsTotal: 0 });
         },
-        [ac.user_updateInfo]: (state: tAppInfo.appGlobal, newValue: ac.user_updateInfo) => {
+        [ac.user_updateInfo]: (state: tProject.appGlobal, newValue: ac.user_updateInfo) => {
             if (!newValue) return state;
             return objHp.assign({}, state, {
                 locationInfo: {
@@ -104,25 +104,25 @@ const appGlobalHandler: {
                 }
             });
         },
-        [ac.goods_showInfo]: (state: tAppInfo.appGlobal, newValue: ac.goods_showInfo) => {
+        [ac.goods_showInfo]: (state: tProject.appGlobal, newValue: ac.goods_showInfo) => {
             const v = {
                 addGoodsInfo: objHp.assign({}, state.addGoodsInfo, newValue)
             }
             return objHp.assign({}, state, v);
         },
-        [ac.goods_addToCart]: (state: tAppInfo.appGlobal, newValue: ac.goods_addToCart) => {
+        [ac.goods_addToCart]: (state: tProject.appGlobal, newValue: ac.goods_addToCart) => {
             const v = {
                 cartGoodsTotal: newValue.cartGoodsTotal
             }
             return objHp.assign({}, state, v);
         },
-        [ac.goods_deleteFromCart]: (state: tAppInfo.appGlobal, newValue: ac.goods_deleteFromCart) => {
+        [ac.goods_deleteFromCart]: (state: tProject.appGlobal, newValue: ac.goods_deleteFromCart) => {
             const v = {
                 cartGoodsTotal: newValue.cartGoodsTotal
             }
             return objHp.assign({}, state, v);
         },
-        [ac.cart_getList]: (state: tAppInfo.appGlobal, newValue: ac.cart_getList) => {
+        [ac.cart_getList]: (state: tProject.appGlobal, newValue: ac.cart_getList) => {
             const v = {
                 cartGoodsTotal: newValue.cartGoodsTotal
             }
