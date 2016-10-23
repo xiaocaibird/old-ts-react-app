@@ -1,4 +1,4 @@
-declare namespace tProject {
+declare namespace tApp {
     export type lastUnLoadInfo = {
         state: state,
         lastUnloadTime: number
@@ -73,7 +73,7 @@ declare namespace tProject {
     } | undefined
 }
 
-declare namespace tProject {
+declare namespace tApp {
     export type clearLargePicture = {
         show: boolean,
         path: string
@@ -92,7 +92,7 @@ declare namespace tProject {
     }
 }
 
-declare namespace tProject {
+declare namespace tApp {
     type IsOrNo = '1' | '0' | 1 | 0;
 
     export type activeList = active[];
@@ -436,5 +436,5 @@ declare namespace tProject {
     }
 }
 
-declare const wechat_initData: tProject.initData;
+declare const wechat_initData: tApp.initData;
 

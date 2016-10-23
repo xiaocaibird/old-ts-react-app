@@ -2,7 +2,7 @@ import { AWebApp } from '../../web/App';
 import { Factory as f } from '../../Factory';
 import { strHp, objHp, cookieHp } from '../../../helper';
 
-export class App extends AWebApp<tProject.initData, tProject.appConfig> {
+export class App extends AWebApp<tApp.initData, tApp.appConfig> {
     static readonly instance: App = new App();
     private constructor() {
         super();
@@ -119,7 +119,7 @@ export class App extends AWebApp<tProject.initData, tProject.appConfig> {
 
         try {
             if (lastUnLoadInfoStr) {
-                const lastUnLoadInfo = strHp.toJson<tProject.lastUnLoadInfo>(lastUnLoadInfoStr);
+                const lastUnLoadInfo = strHp.toJson<tApp.lastUnLoadInfo>(lastUnLoadInfoStr);
                 if (lastUnLoadInfo && lastUnLoadInfo.lastUnloadTime && lastUnLoadInfo.state && !this.isRefreshStateInStroage(lastUnLoadInfo.lastUnloadTime)) {
                     lastUnLoadInfo.state.appGlobal.spinnerShow = false;
                     lastUnLoadInfo.state.appGlobal.addGoodsInfo.show = false;

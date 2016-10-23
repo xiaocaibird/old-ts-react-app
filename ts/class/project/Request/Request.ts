@@ -402,7 +402,7 @@ export class Request extends AWebRequest {
 
     getCheckOrderInfo() {
         return this.postGlobalHandler(this.createFullUrl('/app/orders/check')).then(
-            (data: tProject.orderCheckInfo) => {
+            (data: tApp.orderCheckInfo) => {
                 if (data && data.receiveAddress) {
                     return f.AsyncOperation.getResolve(data);
                 }
